@@ -1,7 +1,8 @@
 const express = require('express');
-
 const app = express();
-const port = 3000;
+require('dotenv').config()
+const port = process.env.PORT || 3000
+
 
 app.use(express.json());
 
@@ -12,7 +13,7 @@ app.post('/teas', (req, res) => {
     const { name, price } = req.body;
     const newTea = {
         id: nextID++,
-        name, 
+        name,
         price
     };
     teaData.push(newTea);
@@ -35,7 +36,7 @@ app.put("/update/:id", (req, res) => {
     const tea = teaData.find((tea) => tea.id === parseInt(req.params.id));
     if (!tea) {
         return res.status(404).send({ message: "Tea not found..." });
-    } 
+    }
     tea.price = "300 bucks"; // Static price update as per code
     res.status(200).send({ message: "Updated Successfully", tea });
 });
